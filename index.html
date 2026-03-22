@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elaine Level Up</title>
+  <meta
+    name="description"
+    content="Elaine 的个人网站：打怪升级中"
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="top-controls">
+      <button
+        class="music-toggle"
+        type="button"
+        aria-pressed="false"
+        aria-label="toggle background music"
+        data-i18n-aria-label="musicAria"
+        title="BGM"
+      >
+        <span class="music-icon" aria-hidden="true"></span>
+      </button>
+      <div class="lang-toggle" role="group" aria-label="language switcher">
+      <button class="lang-button is-active" type="button" data-lang="zh">中</button>
+      <button class="lang-button" type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+    <header class="hero panel">
+      <div class="hero-copy">
+        <p class="system-tag" data-i18n="systemTag">PLAYER ONE / ELAINE / Y2K QUEST</p>
+        <h1>ELAINE</h1>
+        <p class="hero-intro" data-i18n="heroIntro">Start MY Level up</p>
+        <div class="hero-meta">
+          <span data-i18n="heroMetaCreative">Creative</span>
+          <span data-i18n="heroMetaCore">Product x AI x Data</span>
+          <span data-i18n="heroMetaEnergy">Energetic</span>
+        </div>
+        <div class="hero-favorites">
+          <span data-i18n="fav1">KPOP</span>
+          <span data-i18n="fav2">YUQI</span>
+          <span data-i18n="fav3">IDLE</span>
+          <span data-i18n="fav4">MINI</span>
+          <span data-i18n="fav5">GAME MODE</span>
+        </div>
+      </div>
+      <div class="hero-stage">
+        <div class="marquee" data-i18n="marquee">SELECT HERO / BOSS MODE ON</div>
+        <div class="screen">
+          <div class="screen-playfield">
+            <img
+              class="hero-art"
+              src="./assets/hero/cyber-flier.png"
+              alt="Elaine inspired pixel flyer poster"
+            >
+            <div class="hero-art-fallback" data-i18n="heroFallback">DROP HERO ART HERE</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout-grid">
+      <section class="panel card education-card" id="education">
+        <p class="panel-kicker" data-i18n="educationKicker">BOSS RUSH / ACADEMY</p>
+        <h2 data-i18n="educationTitle">教育背景</h2>
+        <p class="section-lead" data-i18n="educationLead">主线任务：进度2/3，最终BOSS加载中...</p>
+        <div class="boss-lane">
+          <article class="boss-card is-active">
+            <p class="boss-status" data-i18n="edu1Status">NOW FIGHTING</p>
+            <p class="boss-time">2024.09 - 2026.11</p>
+            <h3 data-i18n="edu1School">香港中文大学（深圳）</h3>
+            <p data-i18n="edu1Degree">公司金融与投资 · 硕士（全日制）</p>
+            <small data-i18n="edu1Desc">装备技能：财务报表分析 / 固定收益 / 公司金融 / 公司估值</small>
+          </article>
+          <article class="boss-card is-cleared">
+            <p class="boss-status" data-i18n="edu2Status">BOSS CLEARED</p>
+            <p class="boss-time">2023.09 - 2024.07</p>
+            <h3 data-i18n="edu2School">中央财经大学</h3>
+            <p data-i18n="edu2Degree">工商管理 · 第二学位（全日制）</p>
+          </article>
+          <article class="boss-card is-cleared">
+            <p class="boss-status" data-i18n="edu3Status">BOSS CLEARED</p>
+            <p class="boss-time">2019.09 - 2023.06</p>
+            <h3 data-i18n="edu3School">中央财经大学</h3>
+            <p data-i18n="edu3Degree">金融科技 · 本科（全日制）</p>
+            <small data-i18n="edu3Desc">装备技能：人工智能 / 软件工程 / 数据结构 / 金融科技</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel card xp-card" id="journey">
+        <p class="panel-kicker" data-i18n="xpKicker">BOSS RUSH / EXPERIENCE</p>
+        <div class="journey-topbar">
+          <h2 data-i18n="xpTitle">实习经历</h2>
+          <div class="track-switch" role="tablist" aria-label="career track switcher">
+            <button class="track-button is-active" type="button" data-track="internet">互联网</button>
+            <button class="track-button" type="button" data-track="finance">金融</button>
+          </div>
+        </div>
+        <p class="section-lead" id="journey-lead">支线任务：遭遇BOSS战！完美通关100%！</p>
+        <div class="boss-lane journey-lane" id="journey-lane"></div>
+      </section>
+
+      <section class="panel card portfolio-card" id="portfolio">
+        <p class="panel-kicker" data-i18n="portfolioKicker">SKILL DECK</p>
+        <h2 data-i18n="portfolioTitle">作品集</h2>
+        <p class="section-lead" data-i18n="portfolioLead">达成成就：</p>
+        <div class="skill-deck">
+          <article class="skill-card rarity-ssr">
+            <span class="project-rank">SSR</span>
+            <h3 data-i18n="project1Title">「森罗 Sylvan」AI 个人知识库 Web App</h3>
+            <p data-i18n="project1Desc">针对“知识碎片化”提出“知识生命化”理念。注重低摩擦、无感化、构建体系化知识库。目前MVP已上线网页。</p>
+            <a class="cta-button" href="https://sylvan.ofrcome.icu/" target="_blank" rel="noreferrer" data-i18n="projectLink">进入线上作品</a>
+          </article>
+          <article class="skill-card rarity-sr">
+            <span class="project-rank">SR</span>
+            <h3 data-i18n="project2Title">「碎花」智能记账小程序</h3>
+            <p data-i18n="project2Desc">将“情感价值”赋予枯燥的记账日常，让记账像玩游戏一样简单。通过 Gemini 与 Cursor 独立开发，已上线微信小程序。</p>
+            <div class="qr-showcase">
+              <div class="qr-frame">
+                <img
+                  class="qr-image"
+                  src="./assets/project/bloom-qr.png"
+                  alt="碎花智能记账微信小程序二维码"
+                >
+                <div class="qr-fallback" data-i18n="qrFallback">MINI PROGRAM QR</div>
+              </div>
+              <div class="qr-copy">
+                <span class="qr-chip" data-i18n="qrChip">SCAN TO PLAY</span>
+                <p data-i18n="qrText">微信扫码进入「碎花」，解锁智能记账、虚拟陪伴和花园养成。</p>
+              </div>
+            </div>
+          </article>
+          <article class="skill-card rarity-r">
+            <span class="project-rank">R</span>
+            <h3 data-i18n="project3Title">AI 网申智能填表 Google 插件</h3>
+            <p data-i18n="project3Desc">针对毕业生网申痛点开发。LLM 替代传统关键词匹配，完成简历解析、网页语义识别和字段自动填充，单次网申时间从 30 分钟以上压缩到 5 分钟以内。</p>
+            <a
+              class="cta-button github-portal"
+              href="https://github.com/Elaine823/Automated-CV-Filling-for-Online-Applications---Google-Plugin"
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="project3Github"
+            >
+              <span class="pixel-octocat" aria-hidden="true"></span>
+              前往 GitHub
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel card skills-card">
+        <p class="panel-kicker" data-i18n="skillsKicker">DROP REWARDS</p>
+        <h2 data-i18n="skillsTitle">专业技能</h2>
+        <p class="section-lead" data-i18n="skillsLead">技能树点亮中</p>
+        <div class="reward-grid">
+          <article class="reward-item"><strong>Python</strong><span data-i18n="reward1">爬虫 / 数据处理</span></article>
+          <article class="reward-item"><strong>SQL</strong><span data-i18n="reward2">数据分析</span></article>
+          <article class="reward-item"><strong>Excel / VBA</strong><span data-i18n="reward3">模型 / 数据清洗 / 报告</span></article>
+          <article class="reward-item"><strong>MasterGo</strong><span data-i18n="reward4">原型图</span></article>
+          <article class="reward-item"><strong>Prompt</strong><span data-i18n="reward5">LLM 应用</span></article>
+          <article class="reward-item"><strong>A/B Testing</strong><span data-i18n="reward6">实验意识 / 结果验证</span></article>
+          <article class="reward-item"><strong>English Ready</strong><span data-i18n="reward7">EILTS6.5 英语可作工作语言</span></article>
+          <article class="reward-item"><strong>Product Sense</strong><span data-i18n="reward8">洞察 / 设计 / 推进落地</span></article>
+          <article class="reward-item"><strong>Wind</strong><span data-i18n="reward9">金融数据库 / 宏观与固收跟踪</span></article>
+          <article class="reward-item"><strong>Bloomberg</strong><span data-i18n="reward10">市场数据 / 跨资产信息检索</span></article>
+          <article class="reward-item"><strong>Valuation</strong><span data-i18n="reward11">公司估值 / 基本面分析</span></article>
+        </div>
+      </section>
+
+      <section class="panel card resume-card" id="resume">
+        <p class="panel-kicker" data-i18n="resumeKicker">SAVE POINT</p>
+        <h2 data-i18n="resumeTitle">简历下载</h2>
+        <div class="resume-options">
+          <a class="resume-option cta-button" href="./assets/resume/elaine-internet-resume.pdf" download>
+            <span class="resume-option-tag" data-i18n="resumeInternetTag">INTERNET</span>
+            <strong data-i18n="resumeInternetTitle">互联网方向简历</strong>
+            <small data-i18n="resumeInternetMeta">产品 / AI / 数据应用</small>
+            <span class="resume-option-cta" data-i18n="resumeButton">DOWNLOAD CV</span>
+          </a>
+          <a class="resume-option cta-button" href="./assets/resume/elaine-finance-resume.pdf" download>
+            <span class="resume-option-tag" data-i18n="resumeFinanceTag">FINANCE</span>
+            <strong data-i18n="resumeFinanceTitle">金融方向简历</strong>
+            <small data-i18n="resumeFinanceMeta">固收 / 债承 / 研究支持</small>
+            <span class="resume-option-cta" data-i18n="resumeButton">DOWNLOAD CV</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel card contact-card" id="contact">
+        <p class="panel-kicker" data-i18n="contactKicker">FINAL STAGE</p>
+        <h2 data-i18n="contactTitle">与我联系</h2>
+        <p class="contact-line">Phone / 18976835945</p>
+        <p class="contact-line">Mail / yiyunlong@link.cuhk.edu.cn</p>
+        <p class="contact-line" data-i18n="contactMood">Mood / Ready to join, ready to build, ready to make it iconic.</p>
+      </section>
+    </main>
+  </div>
+
+  <audio id="bgm-player" preload="auto"></audio>
+  <script src="./script.js"></script>
+</body>
+</html>
