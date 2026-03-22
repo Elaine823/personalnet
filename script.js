@@ -525,27 +525,6 @@ async function startTrack(index = currentTrackIndex) {
   return playLoadedTrack();
 }
 
-function bindMusicAutoResume() {
-  const resumeMusic = async () => {
-    if (!musicWanted || musicToggle?.classList.contains("is-on")) {
-      return;
-    }
-
-    const didPlay = musicStarted ? await playLoadedTrack() : await startTrack(currentTrackIndex);
-    if (didPlay) {
-      musicToggle?.classList.add("is-on");
-      updateMusicButtonLabel();
-      window.removeEventListener("pointerdown", resumeMusic);
-      window.removeEventListener("touchstart", resumeMusic);
-      window.removeEventListener("keydown", resumeMusic);
-    }
-  };
-
-  window.addEventListener("pointerdown", resumeMusic, { passive: true });
-  window.addEventListener("touchstart", resumeMusic, { passive: true });
-  window.addEventListener("keydown", resumeMusic);
-}
-
 async function enableMusic() {
   if (!bgmPlayer || !musicToggle) {
     return;
@@ -554,22 +533,6 @@ async function enableMusic() {
   musicWanted = true;
   const didPlay = musicStarted ? await playLoadedTrack() : await startTrack(currentTrackIndex);
   musicToggle.classList.toggle("is-on", didPlay);
-
-  updateMusicButtonLabel();
-}
-
-async function tryAutoPlayMusic() {
-  if (!bgmPlayer || !musicToggle) {
-    return;
-  }
-
-  musicWanted = true;
-  const didPlay = musicStarted ? await playLoadedTrack() : await startTrack(currentTrackIndex);
-  musicToggle.classList.toggle("is-on", didPlay);
-
-  if (!didPlay) {
-    bindMusicAutoResume();
-  }
 
   updateMusicButtonLabel();
 }
@@ -649,4 +612,4 @@ qrFrames.forEach((frame) => {
 });
 
 setLanguage("zh");
-tryAutoPlayMusic();
+updateMusicButtonLabel();
