@@ -142,8 +142,8 @@ body.lang-transition::after {
 
 .music-icon {
   position: relative;
-  width: 18px;
-  height: 22px;
+  width: 14px;
+  height: 20px;
   display: inline-block;
 }
 
@@ -155,21 +155,20 @@ body.lang-transition::after {
 }
 
 .music-icon::before {
-  left: 8px;
+  left: 7px;
   top: 0;
   width: 4px;
-  height: 16px;
+  height: 15px;
   border-radius: 3px;
-  box-shadow: 6px -2px 0 currentColor;
+  transform: skewY(-18deg);
 }
 
 .music-icon::after {
-  left: 1px;
+  left: 0;
   bottom: 0;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  box-shadow: 10px -2px 0 0 currentColor;
 }
 
 .music-toggle.is-on .music-icon {
@@ -491,7 +490,7 @@ body.lang-transition::after {
 }
 
 .card h2 {
-  margin: 10px 0 12px;
+  margin: 10px 0 14px;
   font-family: var(--font-cn-title);
   font-weight: 700;
   font-size: clamp(1.45rem, 2.8vw, 2.4rem);
@@ -611,7 +610,7 @@ body.lang-transition::after {
 
 .section-lead {
   max-width: 50rem;
-  margin: 8px 0 0;
+  margin: 0;
   opacity: 0.84;
 }
 
@@ -698,19 +697,28 @@ body.lang-transition::after {
   font-size: 1.25rem;
 }
 
+.journey-title-main,
+.journey-title-role {
+  display: inline;
+}
+
+.journey-title.is-split .journey-title-main::after {
+  content: " \00b7 ";
+}
+
 .boss-status,
 .boss-time {
   margin: 0;
   font-family: var(--font-pixel);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.05em;
 }
 
 .boss-status {
   display: inline-flex;
   margin-bottom: 18px;
-  padding: 10px 12px;
-  border-radius: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
   background: #18111f;
   color: #fff4a4;
 }
@@ -736,10 +744,11 @@ body.lang-transition::after {
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
+  margin: 10px 0 14px;
 }
 
 .journey-topbar h2 {
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 .journey-lane {
@@ -1286,13 +1295,15 @@ body.lang-transition::after {
   }
 
   .journey-topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      margin: 10px 0 16px;
+    }
 
   .track-switch {
-    justify-content: flex-start;
-  }
+      justify-content: flex-start;
+    }
 
   .journey-lane {
     grid-auto-columns: minmax(300px, 84vw);
@@ -1323,9 +1334,27 @@ body.lang-transition::after {
     margin-bottom: 14px;
   }
 
+  .music-toggle {
+    width: 40px;
+    height: 40px;
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
+
+  .lang-button {
+    min-width: 48px;
+    padding: 7px 9px;
+    font-size: 9px;
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
+
   .panel {
     border-radius: 22px;
     box-shadow: 7px 7px 0 var(--shadow);
+  }
+
+  .panel::after {
+    inset: 12px;
+    border-radius: 14px;
   }
 
   .hero,
@@ -1333,21 +1362,37 @@ body.lang-transition::after {
     padding: 22px;
   }
 
+  .hero {
+    gap: 18px;
+  }
+
+  .hero-copy {
+    padding: 6px 2px 4px;
+  }
+
   .screen {
-    min-height: 560px;
-    padding: 20px;
+    min-height: 392px;
+    padding: 14px;
   }
 
   .screen-playfield {
-    left: 20px;
-    right: 20px;
-    top: 20px;
-    bottom: 20px;
+    left: 14px;
+    right: 14px;
+    top: 14px;
+    bottom: 14px;
+  }
+
+  .hero-art {
+    object-position: 71% center;
   }
 
   .hero h1 {
-      font-size: clamp(2.85rem, 15.5vw, 4.5rem);
-    }
+    font-size: clamp(1.82rem, 11.2vw, 2.9rem);
+    line-height: 0.9;
+    letter-spacing: 0;
+    word-break: break-word;
+    text-shadow: 2px 2px 0 #fff7be, 4px 4px 0 var(--shadow);
+  }
 
   .system-tag,
   .panel-kicker {
@@ -1355,16 +1400,33 @@ body.lang-transition::after {
   }
 
   .hero-intro {
-    margin: 22px 0 28px;
-    font-size: 0.92rem;
-    line-height: 1.7;
+    margin: 14px 0 18px;
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  .hero-meta,
+  .hero-favorites {
+    gap: 8px;
+    max-width: none;
   }
 
   .hero-meta span,
   .hero-favorites span {
-    min-height: 34px;
-    padding: 7px 11px;
-    font-size: 0.82rem;
+    min-height: 30px;
+    padding: 5px 9px;
+    font-size: 0.66rem;
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
+
+  .marquee {
+    width: 100%;
+    justify-self: stretch;
+    padding: 9px 12px;
+    border-width: 3px;
+    border-radius: 14px;
+    font-size: 0.74rem;
+    box-shadow: 4px 4px 0 #ff5fa9;
   }
 
   .card h2 {
@@ -1388,17 +1450,49 @@ body.lang-transition::after {
     font-size: 1.08rem;
   }
 
+  .journey-title-main,
+  .journey-title-role {
+    display: block;
+  }
+
+  .journey-title-main::after {
+    content: "";
+  }
+
+  .journey-title-role {
+    margin-top: 4px;
+  }
+
   .boss-time,
   .boss-status,
+  .project-rank,
+  .qr-chip,
   .reward-item strong,
   .resume-option-tag,
   .resume-option-cta {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .boss-status,
+  .project-rank,
+  .qr-chip,
+  .resume-option-tag,
+  .resume-option-cta {
+    padding: 5px 8px;
+    border-radius: 9px;
+    box-shadow: 2px 2px 0 var(--shadow);
   }
 
   .boss-card,
   .skill-card,
   .reward-item {
     padding: 18px;
+  }
+
+  .boss-lane,
+  .journey-lane {
+    margin-top: 22px;
+    padding: 4px 0 18px;
   }
 }

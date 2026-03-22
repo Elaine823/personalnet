@@ -4,16 +4,46 @@ const trackButtons = document.querySelectorAll(".track-button");
 const reassembleTargets = document.querySelectorAll(".hero, .card");
 const musicToggle = document.querySelector(".music-toggle");
 const bgmPlayer = document.querySelector("#bgm-player");
-const qrFrames = document.querySelectorAll(".qr-frame");
-const journeyLead = document.querySelector("#journey-lead");
-const journeyLane = document.querySelector("#journey-lane");
+  const qrFrames = document.querySelectorAll(".qr-frame");
+  const journeyLead = document.querySelector("#journey-lead");
+  const journeyLane = document.querySelector("#journey-lane");
 const pixelFlash = document.createElement("div");
 let transitionTimer;
 let reassembleTimer;
 let currentTrackIndex = 0;
 let musicStarted = false;
+let musicWanted = true;
 let currentLanguage = "zh";
-let currentCareerTrack = "internet";
+  let currentCareerTrack = "internet";
+
+  function formatJourneyTitle(title) {
+    const parts = String(title || "")
+      .split(" · ")
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+    if (!parts.length) {
+      return '<h3 class="journey-title"></h3>';
+    }
+
+    if (parts.length === 1) {
+      return `
+        <h3 class="journey-title">
+          <span class="journey-title-main">${parts[0]}</span>
+        </h3>
+      `;
+    }
+
+    const role = parts.pop();
+    const main = parts.join(" · ");
+
+    return `
+      <h3 class="journey-title is-split">
+        <span class="journey-title-main">${main}</span>
+        <span class="journey-title-role">${role}</span>
+      </h3>
+    `;
+  }
 
 pixelFlash.className = "pixel-flash";
 document.body.appendChild(pixelFlash);
@@ -30,7 +60,7 @@ const translations = {
     description: "Elaine 的个人网站：打怪升级中",
     systemTag: "WORLD PLAYER",
     heroIntro: "Start MY Level up",
-    heroMetaCreative: "Creative",
+      heroMetaCreative: "Curious",
     heroMetaCore: "Product x AI x Data",
     heroMetaEnergy: "Energetic",
     fav1: "KPOP",
@@ -84,14 +114,14 @@ const translations = {
           {
             status: "BOSS CLEARED",
             time: "2025.03 - 2025.07",
-            title: "国信证券经济研究所 · 固收研究助理",
+            title: "国信证券 · 经济研究所 · 固收研究助理",
             desc: "维护 5000+ 时间序列的全球宏观数据库，跟踪海内外政策与跨境银行观点，持续输出周报、月报和专题拆解，辅助团队做投资策略与资产配置判断。",
             wide: true,
           },
           {
             status: "BOSS CLEARED",
             time: "2024.12 - 2025.03",
-            title: "国信证券固收事业部 · 债承实习生",
+            title: "国信证券 · 固收事业部 · 债承实习生",
             desc: "参与发行人深度尽调与内核材料优化，通过穿透核查、抽凭和交叉验证识别未披露关联交易风险，并完成高密度反馈答复材料。",
             wide: true,
           },
@@ -105,7 +135,7 @@ const translations = {
           {
             status: "BOSS CLEARED",
             time: "2021.11 - 2022.01",
-            title: "中再资产管理 · 投资研究助理",
+            title: "中再资产管理 · 研究部 · 投资研究助理",
             desc: "协助撰写智能驾驶行业产业链深度研究，聚焦于传感器，搭建行业与重点公司分析框架，支撑投研判断。",
             wide: true,
           },
@@ -119,7 +149,7 @@ const translations = {
     project1Desc: "针对“知识碎片化”提出“知识生命化”理念。注重低摩擦、无感化、构建体系化知识库。基于Cursor开发，目前MVP已上线网页。",
     projectLink: "进入森罗",
     project2Title: "「碎花」智能记账小程序",
-    project2Desc: "将“情感价值”赋予枯燥的记账日常，让记账像玩游戏一样简单。通过 Gemini 与 Cursor 开发，已上线微信小程序。",
+    project2Desc: "将“情绪价值”赋予枯燥的记账日常，让记账像玩游戏一样简单。通过 Gemini 与 Cursor 开发，已上线微信小程序。",
     qrFallback: "MINI PROGRAM QR",
     qrChip: "SCAN TO PLAY",
     qrText: "微信扫码进入「碎花」，解锁智能记账花园",
@@ -218,14 +248,14 @@ const translations = {
           {
             status: "BOSS CLEARED",
             time: "2025.03 - 2025.07",
-            title: "Guosen Securities Research Institute · Fixed Income Research Assistant",
+            title: "Guosen Securities  · Research Institute · Fixed Income Research Assistant",
             desc: "Maintained a global macro database with 5,000+ time series, tracked domestic and overseas policy developments and cross-border bank views, and continuously produced weekly reports, monthly reports, and topical breakdowns to support investment strategy and asset allocation decisions.",
             wide: true,
           },
           {
             status: "BOSS CLEARED",
             time: "2024.12 - 2025.03",
-            title: "Guosen Securities Fixed Income Division · Debt Underwriting Intern",
+            title: "Guosen Securities  · Fixed Income Division · Debt Underwriting Intern",
             desc: "Participated in deep due diligence and internal review optimization for issuers, identifying undisclosed related-party transaction risks through penetration checks, voucher sampling, and cross-validation, while handling dense feedback response materials.",
             wide: true,
           },
@@ -239,7 +269,7 @@ const translations = {
           {
             status: "BOSS CLEARED",
             time: "2021.11 - 2022.01",
-            title: "China Re Asset Management · Investment Research Assistant",
+            title: "China Re Asset Management · Research Institute · Investment Research Assistant",
             desc: "Assisted with in-depth smart-driving industry chain research focused on sensors, built frameworks for sector and key-company analysis, and supported investment research judgment.",
             wide: true,
           },
@@ -416,16 +446,16 @@ function renderCareerTrack() {
     return;
   }
 
-  journeyLead.textContent = trackData.lead;
-  journeyLane.innerHTML = trackData.cards.map((card) => `
-    <article class="boss-card is-cleared${card.wide ? " wide-card" : ""}">
-      <p class="boss-status">${card.status}</p>
-      <p class="boss-time">${card.time}</p>
-      <h3>${card.title}</h3>
-      <p>${card.desc}</p>
-    </article>
-  `).join("");
-}
+    journeyLead.textContent = trackData.lead;
+    journeyLane.innerHTML = trackData.cards.map((card) => `
+      <article class="boss-card is-cleared${card.wide ? " wide-card" : ""}">
+        <p class="boss-status">${card.status}</p>
+        <p class="boss-time">${card.time}</p>
+        ${formatJourneyTitle(card.title)}
+        <p>${card.desc}</p>
+      </article>
+    `).join("");
+  }
 
 function updateMusicButtonLabel() {
   const lang = getCurrentLanguage();
@@ -449,22 +479,81 @@ function loadTrack(index) {
   bgmPlayer.load();
 }
 
+function waitForAudioReady() {
+  if (!bgmPlayer) {
+    return Promise.resolve();
+  }
+
+  if (bgmPlayer.readyState >= 2) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    const handleReady = () => {
+      bgmPlayer.removeEventListener("canplay", handleReady);
+      bgmPlayer.removeEventListener("loadeddata", handleReady);
+      resolve();
+    };
+
+    bgmPlayer.addEventListener("canplay", handleReady, { once: true });
+    bgmPlayer.addEventListener("loadeddata", handleReady, { once: true });
+  });
+}
+
+async function playLoadedTrack() {
+  if (!bgmPlayer) {
+    return false;
+  }
+
+  await waitForAudioReady();
+
+  try {
+    await bgmPlayer.play();
+    return true;
+  } catch (_error) {
+    return false;
+  }
+}
+
+async function startTrack(index = currentTrackIndex) {
+  if (!bgmPlayer) {
+    return false;
+  }
+
+  loadTrack(index);
+  musicStarted = true;
+  return playLoadedTrack();
+}
+
+function bindMusicAutoResume() {
+  const resumeMusic = async () => {
+    if (!musicWanted || musicToggle?.classList.contains("is-on")) {
+      return;
+    }
+
+    const didPlay = musicStarted ? await playLoadedTrack() : await startTrack(currentTrackIndex);
+    if (didPlay) {
+      musicToggle?.classList.add("is-on");
+      updateMusicButtonLabel();
+      window.removeEventListener("pointerdown", resumeMusic);
+      window.removeEventListener("touchstart", resumeMusic);
+      window.removeEventListener("keydown", resumeMusic);
+    }
+  };
+
+  window.addEventListener("pointerdown", resumeMusic, { passive: true });
+  window.addEventListener("touchstart", resumeMusic, { passive: true });
+  window.addEventListener("keydown", resumeMusic);
+}
+
 async function enableMusic() {
   if (!bgmPlayer || !musicToggle) {
     return;
   }
 
-  if (!musicStarted) {
-    loadTrack(currentTrackIndex);
-    musicStarted = true;
-  }
-
-  try {
-    await bgmPlayer.play();
-    musicToggle.classList.add("is-on");
-  } catch (_error) {
-    musicToggle.classList.remove("is-on");
-  }
+  musicWanted = true;
+  const didPlay = musicStarted ? await playLoadedTrack() : await startTrack(currentTrackIndex);
+  musicToggle.classList.toggle("is-on", didPlay);
 
   updateMusicButtonLabel();
 }
@@ -474,16 +563,12 @@ async function tryAutoPlayMusic() {
     return;
   }
 
-  if (!musicStarted) {
-    loadTrack(currentTrackIndex);
-    musicStarted = true;
-  }
+  musicWanted = true;
+  const didPlay = musicStarted ? await playLoadedTrack() : await startTrack(currentTrackIndex);
+  musicToggle.classList.toggle("is-on", didPlay);
 
-  try {
-    await bgmPlayer.play();
-    musicToggle.classList.add("is-on");
-  } catch (_error) {
-    musicToggle.classList.remove("is-on");
+  if (!didPlay) {
+    bindMusicAutoResume();
   }
 
   updateMusicButtonLabel();
@@ -494,6 +579,7 @@ function disableMusic() {
     return;
   }
 
+  musicWanted = false;
   bgmPlayer.pause();
   musicToggle.classList.remove("is-on");
   updateMusicButtonLabel();
@@ -519,11 +605,14 @@ trackButtons.forEach((button) => {
 
 if (bgmPlayer) {
   bgmPlayer.volume = 0.45;
-  bgmPlayer.addEventListener("ended", () => {
-    loadTrack(currentTrackIndex + 1);
-    if (musicToggle?.classList.contains("is-on")) {
-      bgmPlayer.play().catch(() => {});
+  bgmPlayer.addEventListener("ended", async () => {
+    if (!musicWanted) {
+      return;
     }
+
+    const didPlay = await startTrack(currentTrackIndex + 1);
+    musicToggle?.classList.toggle("is-on", didPlay);
+    updateMusicButtonLabel();
   });
 }
 
