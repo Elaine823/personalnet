@@ -17,6 +17,12 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <div class="ambient-scene" aria-hidden="true">
+    <span class="ambient-orb orb-a"></span>
+    <span class="ambient-orb orb-b"></span>
+    <span class="ambient-orb orb-c"></span>
+    <div class="ambient-particles"></div>
+  </div>
   <div class="page-shell">
     <div class="top-controls">
       <button
@@ -65,10 +71,37 @@
           </div>
         </div>
       </div>
+      <div class="scroll-progress" aria-hidden="true">
+        <span class="scroll-progress-label">loading...</span>
+        <span class="scroll-progress-percent">100%</span>
+        <div class="scroll-progress-track">
+          <span class="scroll-progress-glow"></span>
+          <span class="scroll-progress-dots"></span>
+          <span class="scroll-progress-burst"></span>
+          <span class="scroll-progress-bar"></span>
+          <span class="scroll-progress-flight">
+            <span class="scroll-progress-trail"></span>
+            <img
+              class="scroll-progress-hero scroll-progress-hero--fly"
+              src="./assets/hero/cyber-flier3.png"
+              alt=""
+            >
+            <img
+              class="scroll-progress-hero scroll-progress-hero--done"
+              src="./assets/hero/cyber-flier4.png"
+              alt=""
+            >
+          </span>
+        </div>
+      </div>
     </header>
 
     <main class="layout-grid">
       <section class="panel card education-card" id="education">
+        <div class="section-companion companion-education" aria-hidden="true">
+          <img class="section-companion-art" src="./assets/hero/cyber-flier7.png" alt="">
+          <span class="section-companion-tag">STUDY MODE</span>
+        </div>
         <p class="panel-kicker" data-i18n="educationKicker">BOSS RUSH / ACADEMY</p>
         <h2 data-i18n="educationTitle">教育背景</h2>
         <p class="section-lead" data-i18n="educationLead">主线任务：进度2/3，最终BOSS加载中...</p>
@@ -97,6 +130,10 @@
       </section>
 
       <section class="panel card xp-card" id="journey">
+        <div class="section-companion companion-journey" aria-hidden="true">
+          <img class="section-companion-art" src="./assets/hero/cyber-flier8.png" alt="">
+          <span class="section-companion-tag">BOSS RUN</span>
+        </div>
         <p class="panel-kicker" data-i18n="xpKicker">BOSS RUSH / EXPERIENCE</p>
         <div class="journey-topbar">
           <h2 data-i18n="xpTitle">实习经历</h2>
@@ -110,6 +147,10 @@
       </section>
 
       <section class="panel card portfolio-card" id="portfolio">
+        <div class="section-companion companion-portfolio" aria-hidden="true">
+          <img class="section-companion-art" src="./assets/hero/cyber-flier5.png" alt="">
+          <span class="section-companion-tag">IDEA DROP</span>
+        </div>
         <p class="panel-kicker" data-i18n="portfolioKicker">SKILL DECK</p>
         <h2 data-i18n="portfolioTitle">作品集</h2>
         <p class="section-lead" data-i18n="portfolioLead">达成成就：</p>
@@ -158,6 +199,10 @@
       </section>
 
       <section class="panel card skills-card">
+        <div class="section-companion companion-skills" aria-hidden="true">
+          <img class="section-companion-art" src="./assets/hero/cyber-flier6.png" alt="">
+          <span class="section-companion-tag">LEVEL UP</span>
+        </div>
         <p class="panel-kicker" data-i18n="skillsKicker">DROP REWARDS</p>
         <h2 data-i18n="skillsTitle">技能树</h2>
         <p class="section-lead" data-i18n="skillsLead">技能树点亮中</p>
@@ -180,6 +225,10 @@
       </section>
 
       <section class="panel card resume-card" id="resume">
+        <div class="section-companion companion-resume" aria-hidden="true">
+          <img class="section-companion-art" src="./assets/hero/cyber-flier4.png" alt="">
+          <span class="section-companion-tag">SAVE CLEAR</span>
+        </div>
         <p class="panel-kicker" data-i18n="resumeKicker">SAVE POINT</p>
         <h2 data-i18n="resumeTitle">简历下载</h2>
         <div class="resume-options">
@@ -199,6 +248,10 @@
       </section>
 
       <section class="panel card contact-card" id="contact">
+        <div class="section-companion companion-contact" aria-hidden="true">
+          <img class="section-companion-art" src="./assets/hero/cyber-flier4.png" alt="">
+          <span class="section-companion-tag">PRESS START</span>
+        </div>
         <p class="panel-kicker" data-i18n="contactKicker">FINAL STAGE</p>
         <h2 data-i18n="contactTitle">与我联系</h2>
         <p class="contact-line">Phone / 18976835945</p>

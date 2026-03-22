@@ -2,48 +2,54 @@ const revealTargets = document.querySelectorAll(".card, .hero");
 const langButtons = document.querySelectorAll(".lang-button");
 const trackButtons = document.querySelectorAll(".track-button");
 const reassembleTargets = document.querySelectorAll(".hero, .card");
+const interactivePanels = document.querySelectorAll(".panel");
 const musicToggle = document.querySelector(".music-toggle");
 const bgmPlayer = document.querySelector("#bgm-player");
-  const qrFrames = document.querySelectorAll(".qr-frame");
-  const journeyLead = document.querySelector("#journey-lead");
-  const journeyLane = document.querySelector("#journey-lane");
+const qrFrames = document.querySelectorAll(".qr-frame");
+const journeyLead = document.querySelector("#journey-lead");
+const journeyLane = document.querySelector("#journey-lane");
+const scrollProgressBar = document.querySelector(".scroll-progress-bar");
+const ambientParticles = document.querySelector(".ambient-particles");
+const heroArt = document.querySelector(".hero-art");
 const pixelFlash = document.createElement("div");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let transitionTimer;
 let reassembleTimer;
+let musicClickTimer;
 let currentTrackIndex = 0;
 let musicStarted = false;
 let musicWanted = true;
 let currentLanguage = "zh";
-  let currentCareerTrack = "internet";
+let currentCareerTrack = "internet";
 
-  function formatJourneyTitle(title) {
-    const parts = String(title || "")
-      .split(" · ")
-      .map((part) => part.trim())
-      .filter(Boolean);
+function formatJourneyTitle(title) {
+  const parts = String(title || "")
+    .split(" · ")
+    .map((part) => part.trim())
+    .filter(Boolean);
 
-    if (!parts.length) {
-      return '<h3 class="journey-title"></h3>';
-    }
+  if (!parts.length) {
+    return '<h3 class="journey-title"></h3>';
+  }
 
-    if (parts.length === 1) {
-      return `
-        <h3 class="journey-title">
-          <span class="journey-title-main">${parts[0]}</span>
-        </h3>
-      `;
-    }
-
-    const role = parts.pop();
-    const main = parts.join(" · ");
-
+  if (parts.length === 1) {
     return `
-      <h3 class="journey-title is-split">
-        <span class="journey-title-main">${main}</span>
-        <span class="journey-title-role">${role}</span>
+      <h3 class="journey-title">
+        <span class="journey-title-main">${parts[0]}</span>
       </h3>
     `;
   }
+
+  const role = parts.pop();
+  const main = parts.join(" · ");
+
+  return `
+    <h3 class="journey-title is-split">
+      <span class="journey-title-main">${main}</span>
+      <span class="journey-title-role">${role}</span>
+    </h3>
+  `;
+}
 
 pixelFlash.className = "pixel-flash";
 document.body.appendChild(pixelFlash);
@@ -52,6 +58,8 @@ const bgmPlaylist = [
   "./assets/bgm/track-01.mp3",
   "./assets/bgm/track-02.mp3",
   "./assets/bgm/track-03.mp3",
+  "./assets/bgm/track-04.mp3",
+  "./assets/bgm/track-06.mp3",
 ];
 
 const translations = {
@@ -185,9 +193,9 @@ const translations = {
     contactKicker: "FINAL STAGE",
     contactTitle: "与我联系",
     contactMood: "Mood / Ready to join, ready to build, ready to make it iconic.",
-    musicLabel: "BGM OFF",
-    musicLabelOn: "BGM ON",
-    musicAria: "切换背景音乐",
+    musicLabel: "BGM OFF · 双击下一首",
+    musicLabelOn: "BGM ON · 双击下一首",
+    musicAria: "单击切换背景音乐，双击播放下一首",
   },
   en: {
     title: "Elaine Level Up",
@@ -319,9 +327,9 @@ const translations = {
     contactKicker: "FINAL STAGE",
     contactTitle: "Contact Me",
     contactMood: "Mood / Ready to join, ready to build, ready to make it iconic.",
-    musicLabel: "BGM OFF",
-    musicLabelOn: "BGM ON",
-    musicAria: "toggle background music",
+    musicLabel: "BGM OFF · Double-click for next track",
+    musicLabelOn: "BGM ON · Double-click for next track",
+    musicAria: "Single click to toggle background music. Double click for next track.",
   },
 };
 
@@ -446,16 +454,101 @@ function renderCareerTrack() {
     return;
   }
 
-    journeyLead.textContent = trackData.lead;
-    journeyLane.innerHTML = trackData.cards.map((card) => `
-      <article class="boss-card is-cleared${card.wide ? " wide-card" : ""}">
+  journeyLead.textContent = trackData.lead;
+  journeyLane.innerHTML = trackData.cards.map((card, index) => `
+      <article
+        class="boss-card is-cleared track-card-enter${card.wide ? " wide-card" : ""}"
+        style="--card-delay: ${prefersReducedMotion.matches ? 0 : index * 90}ms"
+      >
         <p class="boss-status">${card.status}</p>
         <p class="boss-time">${card.time}</p>
         ${formatJourneyTitle(card.title)}
         <p>${card.desc}</p>
       </article>
     `).join("");
+}
+
+function updateScrollProgress() {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+  document.documentElement.style.setProperty("--scroll-progress", `${Math.min(100, Math.max(0, progress))}%`);
+  if (scrollProgressBar) {
+    scrollProgressBar.setAttribute("aria-valuenow", String(Math.round(progress)));
   }
+}
+
+function createAmbientParticles() {
+  if (!ambientParticles || prefersReducedMotion.matches) {
+    return;
+  }
+
+  ambientParticles.innerHTML = "";
+  const particleCount = window.innerWidth < 640 ? 14 : 24;
+
+  for (let index = 0; index < particleCount; index += 1) {
+    const particle = document.createElement("span");
+    particle.className = "ambient-particle";
+    particle.style.setProperty("--left", `${Math.random() * 100}%`);
+    particle.style.setProperty("--top", `${Math.random() * 100}%`);
+    particle.style.setProperty("--size", `${4 + Math.random() * 10}px`);
+    particle.style.setProperty("--duration", `${12 + Math.random() * 12}s`);
+    particle.style.setProperty("--delay", `${Math.random() * -18}s`);
+    particle.style.setProperty("--alpha", `${0.2 + Math.random() * 0.65}`);
+    ambientParticles.appendChild(particle);
+  }
+}
+
+function bindPointerMotion() {
+  if (prefersReducedMotion.matches) {
+    return;
+  }
+
+  window.addEventListener("pointermove", (event) => {
+    const x = `${event.clientX}px`;
+    const y = `${event.clientY}px`;
+    document.documentElement.style.setProperty("--pointer-x", x);
+    document.documentElement.style.setProperty("--pointer-y", y);
+
+    if (heroArt) {
+      const shiftX = ((event.clientX / window.innerWidth) - 0.5) * 16;
+      const shiftY = ((event.clientY / window.innerHeight) - 0.5) * 16;
+      heroArt.style.setProperty("--hero-shift-x", `${shiftX}px`);
+      heroArt.style.setProperty("--hero-shift-y", `${shiftY}px`);
+    }
+  });
+}
+
+function bindPanelTilt() {
+  if (prefersReducedMotion.matches) {
+    return;
+  }
+
+  interactivePanels.forEach((panel) => {
+    panel.classList.add("interactive");
+    const baseTransform = panel.matches(".hero")
+      ? "rotate(-1deg)"
+      : panel.matches(".contact-card")
+        ? "rotate(1deg)"
+        : "";
+
+    panel.addEventListener("pointermove", (event) => {
+      if (window.innerWidth < 900) {
+        return;
+      }
+
+      const rect = panel.getBoundingClientRect();
+      const offsetX = (event.clientX - rect.left) / rect.width;
+      const offsetY = (event.clientY - rect.top) / rect.height;
+      const rotateY = (offsetX - 0.5) * 5;
+      const rotateX = (0.5 - offsetY) * 4;
+      panel.style.transform = `${baseTransform} perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    panel.addEventListener("pointerleave", () => {
+      panel.style.transform = "";
+    });
+  });
+}
 
 function updateMusicButtonLabel() {
   const lang = getCurrentLanguage();
@@ -525,6 +618,25 @@ async function startTrack(index = currentTrackIndex) {
   return playLoadedTrack();
 }
 
+async function playNextTrack() {
+  if (!bgmPlayer || !musicToggle) {
+    return;
+  }
+
+  const nextIndex = currentTrackIndex + 1;
+  const shouldPlay = musicWanted || musicToggle.classList.contains("is-on");
+
+  if (!shouldPlay) {
+    loadTrack(nextIndex);
+    updateMusicButtonLabel();
+    return;
+  }
+
+  const didPlay = await startTrack(nextIndex);
+  musicToggle.classList.toggle("is-on", didPlay);
+  updateMusicButtonLabel();
+}
+
 async function enableMusic() {
   if (!bgmPlayer || !musicToggle) {
     return;
@@ -581,12 +693,21 @@ if (bgmPlayer) {
 
 if (musicToggle) {
   musicToggle.addEventListener("click", async () => {
-    if (musicToggle.classList.contains("is-on")) {
-      disableMusic();
-      return;
-    }
+    window.clearTimeout(musicClickTimer);
+    musicClickTimer = window.setTimeout(async () => {
+      if (musicToggle.classList.contains("is-on")) {
+        disableMusic();
+        return;
+      }
 
-    await enableMusic();
+      await enableMusic();
+    }, 220);
+  });
+
+  musicToggle.addEventListener("dblclick", async (event) => {
+    event.preventDefault();
+    window.clearTimeout(musicClickTimer);
+    await playNextTrack();
   });
 }
 
@@ -611,5 +732,15 @@ qrFrames.forEach((frame) => {
   syncState();
 });
 
+createAmbientParticles();
+bindPointerMotion();
+bindPanelTilt();
 setLanguage("zh");
 updateMusicButtonLabel();
+updateScrollProgress();
+
+window.addEventListener("scroll", updateScrollProgress, { passive: true });
+window.addEventListener("resize", () => {
+  createAmbientParticles();
+  updateScrollProgress();
+});
