@@ -910,7 +910,7 @@ body.lang-transition::after {
 }
 
 .card {
-  padding: 52px 34px 34px;
+  padding: 42px 34px 34px;
   background: var(--paper);
 }
 
@@ -2104,7 +2104,7 @@ body.lang-transition::after {
   }
 
   .card {
-    padding: 46px 22px 22px;
+    padding: 40px 22px 22px;
   }
 
   .section-companion {
