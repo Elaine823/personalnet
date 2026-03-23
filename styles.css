@@ -2129,6 +2129,7 @@ body.lang-transition::after {
 
   .hero {
     gap: 18px;
+    padding-bottom: 56px;
   }
 
   .hero-copy {
