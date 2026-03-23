@@ -910,7 +910,7 @@ body.lang-transition::after {
 }
 
 .card {
-  padding: 34px;
+  padding: 52px 34px 34px;
   background: var(--paper);
 }
 
@@ -987,12 +987,6 @@ body.lang-transition::after {
 .companion-contact {
   top: 10px;
   right: 12px;
-}
-
-.resume-card,
-.contact-card,
-.xp-card {
-  padding-top: 52px;
 }
 
 .resume-card .section-companion,
@@ -2105,9 +2099,12 @@ body.lang-transition::after {
     border-radius: 14px;
   }
 
-  .hero,
-  .card {
+  .hero {
     padding: 22px;
+  }
+
+  .card {
+    padding: 46px 22px 22px;
   }
 
   .section-companion {
@@ -2119,12 +2116,6 @@ body.lang-transition::after {
 
   .section-companion-art {
     width: 50px;
-  }
-
-  .resume-card,
-  .contact-card,
-  .xp-card {
-    padding-top: 46px;
   }
 
   .hero {
