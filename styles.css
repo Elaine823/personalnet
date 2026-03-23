@@ -1086,6 +1086,7 @@ body.lang-transition::after {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: flex-end;
+  margin-top: 6px;
 }
 
 .track-button {
@@ -2015,6 +2016,7 @@ body.lang-transition::after {
 
   .track-switch {
       justify-content: flex-start;
+      margin-top: 0;
     }
 
   .journey-lane {
