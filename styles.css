@@ -910,7 +910,7 @@ body.lang-transition::after {
 }
 
 .card {
-  padding: 34px;
+  padding: 42px 34px 34px;
   background: var(--paper);
 }
 
@@ -987,12 +987,6 @@ body.lang-transition::after {
 .companion-contact {
   top: 10px;
   right: 12px;
-}
-
-.resume-card,
-.contact-card,
-.xp-card {
-  padding-top: 52px;
 }
 
 .resume-card .section-companion,
@@ -1092,6 +1086,7 @@ body.lang-transition::after {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: flex-end;
+  margin-top: 6px;
 }
 
 .track-button {
@@ -2021,6 +2016,7 @@ body.lang-transition::after {
 
   .track-switch {
       justify-content: flex-start;
+      margin-top: 0;
     }
 
   .journey-lane {
@@ -2105,9 +2101,12 @@ body.lang-transition::after {
     border-radius: 14px;
   }
 
-  .hero,
-  .card {
+  .hero {
     padding: 22px;
+  }
+
+  .card {
+    padding: 40px 22px 22px;
   }
 
   .section-companion {
@@ -2121,14 +2120,9 @@ body.lang-transition::after {
     width: 50px;
   }
 
-  .resume-card,
-  .contact-card,
-  .xp-card {
-    padding-top: 46px;
-  }
-
   .hero {
     gap: 18px;
+    padding-bottom: 56px;
   }
 
   .hero-copy {
